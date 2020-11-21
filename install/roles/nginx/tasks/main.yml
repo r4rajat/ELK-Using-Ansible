@@ -1,0 +1,51 @@
+--- 
+
+- include_tasks: roles/nginx/tasks/Nginx-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: roles/nginx/tasks/Nginx-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+
+
+- name: "Nginx Directory Structure"
+  file: 
+    path=/etc/nginx/conf.d/
+    state=directory
+    mode=0755
+
+- name: "Reverse Proxy for Kibana"
+  template:
+    src=kibana.conf.j2
+    dest=/etc/nginx/sites-available/default
+    owner=root
+    group=root
+    mode=0644
+
+- name: "Starting Nginx service"
+  systemd:
+    name: nginx
+    state: started
+    daemon_reload: yes
+
+
+- name: "Source Create Kibana Admin User Script"
+  template:
+    src=kibanaAdmin.j2
+    dest=/tmp/createUser
+    owner=root
+    group=root
+    mode=0744
+
+- name: "Create Kibana Admin User"
+  expect:
+    command: bash /tmp/createUser
+    responses:
+      'Password:' : "{{ kibana_password }}"
+
+
+- name: "Restart Nginx service"
+  systemd:
+    name: nginx
+    state: reloaded
+    daemon_reload: yes

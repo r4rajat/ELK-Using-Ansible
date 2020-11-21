@@ -1,0 +1,20 @@
+---
+
+- name: "Grab Public Signing Key [RedHat]"
+  rpm_key:
+    state: present
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+- name: "Add Elasticsearch Yum Repo [RedHat]"
+  yum_repository:
+    name: Elastic_7.X_repo
+    baseurl: https://artifacts.elastic.co/packages/7.x/yum
+    gpgcheck: true
+    gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    description: Elastic 7.X Repo
+
+- name: "Install Elasticsearch [RedHat]"
+  yum:
+    name:
+      - elasticsearch
+    update_cache: true

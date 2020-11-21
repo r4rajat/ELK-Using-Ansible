@@ -1,0 +1,6 @@
+---
+
+- name: "Installing NGINX Package [Debian]"
+  apt:
+    name: nginx
+    update_cache: yes

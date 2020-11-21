@@ -1,0 +1,6 @@
+---
+
+- name: "Install Kibana [Debian]"
+  apt:
+   name: kibana
+   update_cache: yes

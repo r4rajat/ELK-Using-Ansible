@@ -1,0 +1,12 @@
+- hosts: servers
+  remote_user: root
+  become: yes
+  become_user: root
+  gather_facts: yes
+  roles:
+  - { role: java-8 }
+  - { role: elasticsearch }
+  - { role: kibana }
+#  - { role: nginx }
+  - { role: logstash }
+

@@ -1,0 +1,6 @@
+---
+
+- name: "Update repositories cache and install Logstash [Debian]"
+  apt:
+   name: logstash
+   update_cache: yes

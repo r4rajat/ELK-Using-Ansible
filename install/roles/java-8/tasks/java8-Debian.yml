@@ -1,0 +1,7 @@
+---
+
+
+- name: "Installing Java 8 Package on Ubuntu"
+  apt:
+   name: openjdk-8-jdk
+   update_cache: yes

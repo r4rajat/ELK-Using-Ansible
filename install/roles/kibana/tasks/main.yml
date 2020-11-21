@@ -1,0 +1,33 @@
+---
+
+- include_tasks: roles/kibana/tasks/Kibana-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: roles/kibana/tasks/Kibana-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+
+# Configurations
+
+- name: "Updating the config file to allow outside access"
+  lineinfile:
+   destfile: /etc/kibana/kibana.yml
+   regexp: 'server.host:'
+   line: 'server.host: {{ kibana_host }}'
+
+- name: "Defining server port"
+  lineinfile:
+   destfile: /etc/kibana/kibana.yml
+   regexp: 'server.port:'
+   line: 'server.port: {{ kibana_port }}'
+
+- name: "Defining Elasticsearch URL"
+  lineinfile:
+   destfile: /etc/kibana/kibana.yml
+   regexp: 'elasticsearch.hosts:'
+   line: 'elasticsearch.hosts: ["http://{{ elasticsearch_host }}:{{ elasticsearch_port }}"]'
+   
+- name: "Starting Kibana"
+  service:
+   name: kibana
+   state: started

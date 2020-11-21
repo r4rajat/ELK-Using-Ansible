@@ -1,0 +1,13 @@
+---
+
+- name: "Installing epel-release Package [RedHat]"
+  yum:
+    name: epel-release
+    update_cache: yes
+
+
+- name: "Installing Nginx Package [RedHat]"
+  yum:
+    name: nginx
+    update_cache: yes
+

@@ -1,0 +1,17 @@
+---
+
+- name: "Add Elastisearch APT key [Debian]"
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+
+
+- name: "Add Elastisearch Repo [Debian]"
+  apt_repository:
+    repo: deb https://artifacts.elastic.co/packages/7.x/apt stable main
+    state: present
+
+- name: "Install Elasicsearch [Debian]"
+  apt:
+    name: elasticsearch
+    update_cache: yes

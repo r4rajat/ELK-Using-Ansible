@@ -1,0 +1,6 @@
+---
+
+- name: "Install Kibana [RedHat]"
+  yum:
+   name: kibana
+   update_cache: yes
